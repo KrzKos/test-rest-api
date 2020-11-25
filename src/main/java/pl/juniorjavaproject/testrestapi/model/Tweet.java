@@ -92,4 +92,16 @@ public class Tweet {
     public void setUser(User user) {
         this.user = user;
     }
+
+    @Override
+    public String toString() {
+        return "Tweet{" +
+                "id=" + id +
+                ", createdOn=" + createdOn +
+                ", updatedOn=" + updatedOn +
+                ", tweetTitle='" + tweetTitle + '\'' +
+                ", tweetText='" + tweetText + '\'' +
+                ", user=" + user +
+                '}';
+    }
 }

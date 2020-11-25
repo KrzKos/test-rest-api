@@ -5,7 +5,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import pl.juniorjavaproject.testrestapi.dto.TweetDTO;
+import pl.juniorjavaproject.testrestapi.dto.UserDTO;
 import pl.juniorjavaproject.testrestapi.model.Tweet;
+import pl.juniorjavaproject.testrestapi.model.User;
 
 @Component
 public class TweetMapper {
@@ -15,6 +17,13 @@ public class TweetMapper {
         LOGGER.info("from({})", tweet);
         ModelMapper modelMapper = new ModelMapper();
         TweetDTO tweetDTO = modelMapper.map(tweet, TweetDTO.class);
+
+        UserDTO userDTO = new UserDTO();
+        userDTO.setId(tweet.getUser().getId());
+        userDTO.setFirstName(tweet.getUser().getFirstName());
+        userDTO.setLastName(tweet.getUser().getLastName());
+
+        tweetDTO.setUserDTO(userDTO);
         LOGGER.info("from({}) = {}", tweet, tweetDTO);
         return tweetDTO;
     }
