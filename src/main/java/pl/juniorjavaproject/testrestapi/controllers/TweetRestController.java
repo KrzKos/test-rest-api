@@ -16,7 +16,6 @@ import pl.juniorjavaproject.testrestapi.services.TweetManagerService;
 import pl.juniorjavaproject.testrestapi.services.TweetService;
 
 import javax.validation.Valid;
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -43,31 +42,21 @@ public class TweetRestController {
 
     @PostMapping
     public ResponseEntity<TweetDTO> create(@Valid @RequestBody TweetDTO tweetDTO, BindingResult result) {
-        if(result.hasErrors()){
-
-        }
-        return ResponseEntity.created(URI.create("/api/tweets/" + tweetService.read(tweetDTO))).build();
+        return tweetManagerService.create(tweetDTO,result);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<TweetDTO> read(@PathVariable Long id, BindingResult result) {
-       if(result.hasErrors()){
-
-       }
-
-        return tweetManagerService.read(id);
+        return tweetManagerService.read(id, result);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TweetDTO> update(@PathVariable Long id, @Valid @RequestBody TweetDTO tweetDTO)
-            throws ElementNotFoundException {
-        TweetDTO updatedTweetDTO = tweetService.update(id, tweetDTO);
-        return ResponseEntity.ok(updatedTweetDTO);
+    public ResponseEntity<TweetDTO> update(@PathVariable Long id, @Valid @RequestBody TweetDTO tweetDTO) throws ElementNotFoundException {
+        return tweetManagerService.update(id,tweetDTO);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) throws ElementNotFoundException {
-        tweetService.delete(id);
-        return ResponseEntity.noContent().build();
+        return tweetManagerService.delete(id);
     }
 }
